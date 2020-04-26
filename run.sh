@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # build
-docker build -t bwangel/kubia:v0.2 .
+docker build -t bwangel/kubia:v0.3 .
 
 # run
-docker run -d -p 8080:8080 --name kubia-container bwangel/kubia:v0.2
+docker run -d -p 8080:8080 -p 8090:8090 --name kubia-container bwangel/kubia:v0.3
