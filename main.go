@@ -11,15 +11,9 @@ var count = 0
 func NewHome(name string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		count += 1
-		if count >= 5 {
-			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprintf(w, "You got it on %s, %d.\n", name, count)
-			return
-		}
-
 		fmt.Printf("Receive Request from %s on %s\n", r.Host, name)
 		hostname, _ := os.Hostname()
-		fmt.Fprintf(w, "You've hit %s on %s\n", hostname, name)
+		fmt.Fprintf(w, "You've hit %s on %s by %d\n", hostname, name, count)
 		return
 	}
 }
