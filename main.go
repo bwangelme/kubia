@@ -13,7 +13,7 @@ func NewHome(name string) func(http.ResponseWriter, *http.Request) {
 		count += 1
 		fmt.Printf("Receive Request from %s on %s\n", r.Host, name)
 		hostname, _ := os.Hostname()
-		fmt.Fprintf(w, "You've hit %s on %s by %d\n", hostname, name, count)
+		fmt.Fprintf(w, "You've hit v2 %s on %s by %d\n", hostname, name, count)
 		return
 	}
 }
