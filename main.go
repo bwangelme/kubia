@@ -2,30 +2,18 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
 
-var count = 0
-
-func NewHome(name string) func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		count += 1
-		fmt.Printf("Receive Request from %s on %s\n", r.Host, name)
-		hostname, _ := os.Hostname()
-		fmt.Fprintf(w, "You've hit v2 %s on %s by %d\n", hostname, name, count)
-		return
-	}
+func Home(w http.ResponseWriter, r *http.Request) {
+	hostname, _ := os.Hostname()
+	fmt.Fprintf(w, "You've hit %s v2\n", hostname)
+	return
 }
 
 func main() {
-	mux1 := http.NewServeMux()
-	mux1.HandleFunc("/", NewHome("mux1"))
-	ch := make(chan struct{})
-
-	http.HandleFunc("/", NewHome("default mux"))
-	go http.ListenAndServe("0.0.0.0:8080", nil)
-	go http.ListenAndServe("0.0.0.0:8090", mux1)
-
-	<-ch
+	http.HandleFunc("/", Home)
+	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
 }
